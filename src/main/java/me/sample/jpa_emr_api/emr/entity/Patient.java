@@ -1,4 +1,4 @@
-package me.sample.jpa_emr_api.patient.entity;
+package me.sample.jpa_emr_api.emr.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -17,16 +17,21 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long patientId;
 
-    private Long hospitalId;
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospitalId;
 
     @Column(length = 45)
     private String name;
 
-    @Column(nullable = false)
-    private int registrationNumber;
+    @Column(length = 13)
+    private int registrationNo;
 
-    @Column(nullable = false)
-    private LocalDate birthday;
+    @Column(length = 10)
+    private String genderCd;
+
+    @Column(nullable = false, length = 10)
+    private String birthday;
 
     @Column(nullable = false, length = 20)
     private String phone;
