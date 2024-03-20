@@ -20,7 +20,7 @@ public class Hospital {
     private String name;
 
     @Column(length = 20)
-    private int organizationNo;
+    private String organizationNo;
 
     @Column(length = 10)
     private String director;

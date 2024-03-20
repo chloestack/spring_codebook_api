@@ -2,10 +2,9 @@ package me.sample.jpa_emr_api.emr.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,13 +18,13 @@ public class Patient {
 
     @ManyToOne
     @JoinColumn(name = "hospital_id")
-    private Hospital hospitalId;
+    private Hospital hospital;
 
     @Column(length = 45)
     private String name;
 
     @Column(length = 13)
-    private int registrationNo;
+    private String registrationNo;
 
     @Column(length = 10)
     private String genderCd;
@@ -35,4 +34,16 @@ public class Patient {
 
     @Column(nullable = false, length = 20)
     private String phone;
+
+    @Builder
+    public Patient(Long patientId, Hospital hospital, String name, String registrationNo, String genderCd, String birthday, String phone) {
+        this.patientId = patientId;
+        this.hospital = hospital;
+        this.name = name;
+        this.registrationNo = registrationNo;
+        this.genderCd = genderCd;
+        this.birthday = birthday;
+        this.phone = phone;
+    }
+
 }
