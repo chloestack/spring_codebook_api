@@ -14,3 +14,7 @@ INSERT INTO code VALUES('01', 'department', '내과');
 INSERT INTO code VALUES('02', 'department', '안과');
 INSERT INTO code VALUES('D', 'treat_type', '약처방');
 INSERT INTO code VALUES('T', 'treat_type', '검사');
+
+-- hospital
+INSERT INTO hospital VALUES(default, '홍두깨', '202401111', '한마음병원' );
+INSERT INTO hospital VALUES(default, '아무개', '202401112', '예쁜치과');
