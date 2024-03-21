@@ -1,14 +1,21 @@
 package me.sample.jpa_emr_api.emr.repository.impl;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import me.sample.jpa_emr_api.emr.dto.PatientSearchParameter;
 import me.sample.jpa_emr_api.emr.entity.Patient;
 import me.sample.jpa_emr_api.emr.entity.QPatient;
 import me.sample.jpa_emr_api.emr.repository.PatientCustomRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,9 +44,50 @@ public class PatientCustomRepositoryImpl implements PatientCustomRepository {
     }
 
     @Override
+    public List<Patient> searchBySearchParam(Pageable pageable, PatientSearchParameter searchParameter) {
+        return query.selectFrom(patient)
+                .where(eqName(searchParameter), eqRegistrationNo(searchParameter), eqBirthDay(searchParameter))
+                .offset(pageable.getOffset())   // 페이지 번호
+                .limit(pageable.getPageSize())  // 페이지 사이즈
+                .fetch();
+    }
+
+    private BooleanExpression eqName(PatientSearchParameter param) {
+        if(param == null || !"name".equals(param.getSearchType())) {
+            return null;
+        } else if (param.getSearchValue() == null || param.getSearchValue().isBlank()) {
+            return null;
+        }
+
+        return patient.name.eq(param.getSearchValue());
+    }
+
+    private BooleanExpression eqRegistrationNo(PatientSearchParameter param) {
+        if(param == null || !"registrationNo".equals(param.getSearchType())) {
+            return null;
+        } else if (param.getSearchValue() == null || param.getSearchValue().isBlank()) {
+            return null;
+        }
+
+        return patient.registrationNo.eq(param.getSearchValue());
+    }
+
+    private BooleanExpression eqBirthDay(PatientSearchParameter param) {
+        if(param == null || !"birthday".equals(param.getSearchType())) {
+            return null;
+        } else if (param.getSearchValue() == null || param.getSearchValue().isBlank()) {
+            return null;
+        }
+
+        return patient.birthday.eq(param.getSearchValue());
+    }
+
+    @Override
     @Transactional
-    public void savePatient(Patient pPatient) {
+    public long savePatient(Patient pPatient) {
         manager.persist(pPatient);
+        manager.flush();
+        return pPatient.getPatientId();
     }
 
     @Override
@@ -53,4 +101,14 @@ public class PatientCustomRepositoryImpl implements PatientCustomRepository {
                 .set(patient.genderCd, pPatient.getGenderCd())
                 .execute();
     }
+
+    @Override
+    @Transactional
+    public void deletePatient(Long id) {
+        query.delete(patient)
+                .where(patient.patientId.eq(id))
+                .execute();
+    }
+
+
 }

@@ -1,11 +1,11 @@
 package me.sample.jpa_emr_api.emr.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
 /**
  * 환자 목록 검색조건
  */
-@Getter
+@Data
 public class PatientSearchParameter {
 
     private String searchType;

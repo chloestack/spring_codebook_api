@@ -4,6 +4,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import me.sample.jpa_emr_api.common.config.QueryDslConfig;
 import me.sample.jpa_emr_api.emr.dto.PatientRequest;
+import me.sample.jpa_emr_api.emr.dto.PatientResponse;
+import me.sample.jpa_emr_api.emr.dto.PatientSearchParameter;
 import me.sample.jpa_emr_api.emr.entity.Hospital;
 import me.sample.jpa_emr_api.emr.entity.Patient;
 import org.junit.Before;
@@ -13,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,6 +56,21 @@ class PatientRepositoryTest {
                         .build()
         );
 
+    }
+
+    @Test
+    void 환자목록조회() {
+        PatientSearchParameter parameter = new PatientSearchParameter();
+        parameter.setSearchType("name");
+        parameter.setSearchValue("김치찌개");
+
+        Pageable pageable = Pageable.ofSize(10);
+        List<Patient> patientList =
+                patientRepository.searchBySearchParam(pageable, parameter);
+
+        assertThat(patientList).isNotNull();
+        assertThat(patientList.size()).isEqualTo(1);
+        // assertThat(patientList.get(0).getName()).isEqualTo("김치찌개");
     }
 
     @Test
