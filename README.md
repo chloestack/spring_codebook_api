@@ -1,4 +1,4 @@
-## core_spring_api
+## spring_codebook_api
 h2, jpa, querydsl, java17, spring boot 3.5, gradle
 * spring boot 3.5 버전에서 매핑되는 querydsl 의 버전이나 세팅 정보가 다를 수 있음
 
