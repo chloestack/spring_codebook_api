@@ -90,13 +90,18 @@ public class PatientCustomRepositoryImpl implements PatientCustomRepository {
     @Override
     @Transactional
     public long updatePatient(Patient pPatient) {
-        return query.update(patient)
+        long count = query.update(patient)
                 .where(patient.patientId.eq(pPatient.getPatientId()))
                 .set(patient.name, pPatient.getName())
                 .set(patient.birthday, pPatient.getBirthday())
                 .set(patient.phone, pPatient.getPhone())
                 .set(patient.genderCd, pPatient.getGenderCd())
                 .execute();
+
+        manager.flush();
+        manager.clear();
+
+        return count;
     }
 
     @Override
