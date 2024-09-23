@@ -16,6 +16,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long>, Patient
     Optional<Patient> searchById(Long id);
 
     @Override
+    Optional<Patient> searchByPatientName(String PatientName);
+
+    @Override
     Optional<Patient> searchByRegistrationNo(String registrationNo);
 
     @Override

@@ -54,6 +54,9 @@ class PatientRepositoryTest {
 
     @Test
     void 환자목록조회() {
+
+        setUp();
+
         PatientSearchParameter parameter = new PatientSearchParameter();
         parameter.setSearchType("name");
         parameter.setSearchValue("김치찌개");

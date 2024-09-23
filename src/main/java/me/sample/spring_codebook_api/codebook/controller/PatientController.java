@@ -18,6 +18,11 @@ public class PatientController {
         return patientService.get(patientId);
     }
 
+    @GetMapping("/{patientName}")
+    public PatientResponse getByName(@PathVariable String patientName) {
+        return patientService.getByName(patientName);
+    }
+
 //    @GetMapping("/list")
 //    public List<PatientResponse> list (PatientSearchParameter parameter) {
 //

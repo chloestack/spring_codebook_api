@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface PatientCustomRepository {
 
     Optional<Patient> searchById(Long id);
+    Optional<Patient> searchByPatientName(String patientName);
     Optional<Patient> searchByRegistrationNo(String registrationNo);
     List<Patient> searchBySearchParam(Pageable pageable, PatientSearchParameter searchParameter);
     long savePatient(Patient patient);

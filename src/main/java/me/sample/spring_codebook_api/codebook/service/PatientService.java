@@ -29,6 +29,12 @@ public class PatientService {
         return PatientResponse.builder().patient(patient).build();
     }
 
+    public PatientResponse getByName(String patientName) {
+        Patient patient = patientRepository.searchByPatientName(patientName)
+                .orElse(Patient.builder().build());
+        return PatientResponse.builder().patient(patient).build();
+    }
+
     public List<PatientResponse> list(Pageable pageable, PatientSearchParameter parameter) {
         List<Patient> patientList = patientRepository.searchBySearchParam(pageable, parameter);
         return patientList.stream().map(p -> PatientResponse.builder().patient(p).build()).collect(Collectors.toList());
