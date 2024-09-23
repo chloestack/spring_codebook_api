@@ -33,6 +33,14 @@ public class PatientCustomRepositoryImpl implements PatientCustomRepository {
     }
 
     @Override
+    public Optional<Patient> searchByPatientName(String patientName) {
+        return Optional.ofNullable(
+                query.selectFrom(patient)
+                        .where(patient.name.eq(patientName))
+                        .fetchOne());
+    }
+
+    @Override
     public Optional<Patient> searchByRegistrationNo(String registrationNo){
         return Optional.ofNullable(
                 query.selectFrom(patient)
