@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface HospitalRepository extends JpaRepository<Hospital, Long> {
+public interface HospitalRepository extends JpaRepository<Hospital, Long>, HospitalCustomRepository {
 
     /**
      * 병원 정보 조회
@@ -23,4 +23,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
      * @return
      */
     Optional<Hospital> findByOrganizationNo(String organizationNo);
+
+    @Override
+    long saveHospital(Hospital hospital);
 }
