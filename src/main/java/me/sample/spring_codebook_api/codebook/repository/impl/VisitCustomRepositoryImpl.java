@@ -7,19 +7,15 @@ import lombok.RequiredArgsConstructor;
 import me.sample.spring_codebook_api.codebook.entity.QVisit;
 import me.sample.spring_codebook_api.codebook.entity.Visit;
 import me.sample.spring_codebook_api.codebook.repository.VisitCustomRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 @RequiredArgsConstructor
 public class VisitCustomRepositoryImpl implements VisitCustomRepository {
 
     private final EntityManager manager;
     private final JPAQueryFactory query;
     private static final QVisit visit = QVisit.visit;
-
-
 
     @Override
     public Optional<Visit> searchById(Long id) {
