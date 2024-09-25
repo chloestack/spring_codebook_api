@@ -4,9 +4,15 @@ import me.sample.spring_codebook_api.common.config.QueryDslConfig;
 import me.sample.spring_codebook_api.codebook.dto.PatientRequest;
 import me.sample.spring_codebook_api.codebook.dto.PatientResponse;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,11 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(QueryDslConfig.class)
 public class PatientServiceTest {
 
-    @SpyBean
+    @MockBean
     private PatientService patientService;
     private PatientResponse patientResponse;
 
-    @Before
+    @BeforeAll
     public void setUp() {
         PatientRequest pr = PatientRequest.builder()
                 .hospitalId(1L)
