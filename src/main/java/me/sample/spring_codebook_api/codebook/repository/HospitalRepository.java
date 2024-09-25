@@ -4,6 +4,7 @@ import me.sample.spring_codebook_api.codebook.entity.Hospital;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,6 +24,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long>, Hospi
      * @return
      */
     Optional<Hospital> findByOrganizationNo(String organizationNo);
+
+    @Override
+    List<Hospital> findAll();
 
     @Override
     long saveHospital(Hospital hospital);
